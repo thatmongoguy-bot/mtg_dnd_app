@@ -38,7 +38,9 @@ class MTGMenu:
             print("5. Search rulebook")
             print("6. Next Turn")
             print("7. Deal Commander Damage")
-            print("8. Exit")
+            print("8. Undo")
+            print("9. Redo")
+            print("10. Exit")
 
             choice = input("\nChoice: ")
 
@@ -59,10 +61,15 @@ class MTGMenu:
             elif choice == "7":
                 self.commander_damage()
             elif choice == "8":
+                self.game.undo()
+            elif choice == "9":
+                self.game.redo()
+            elif choice == "10":
                 print("Thanks for playing!")
                 break
 
     def deal_damage(self):
+        self.game.save_state()  # Save state before dealing damage
         self.show_players()
         idx = int(input("Player number: ")) - 1
         damage = int(input("Amount of damage: "))
@@ -71,6 +78,7 @@ class MTGMenu:
             print(f"{self.game.players[idx].name} took {damage} damage.")
 
     def heal(self):
+        self.game.save_state()  # Save state before healing
         self.show_players()
         idx = int(input("Player number: ")) - 1
         amount = int(input("Amount to heal: "))
@@ -79,6 +87,7 @@ class MTGMenu:
             print(f"{self.game.players[idx].name} was healed by {amount}.")
 
     def add_poison(self):
+        self.game.save_state()  # Save state before adding poison
         self.show_players()
         idx = int(input("Player number: ")) - 1
         self.game.players[idx].poison.increment()
@@ -106,6 +115,7 @@ class MTGMenu:
         if not self.game.track_commander_damage:
             print("Commander damage only in commander format.")
             return
+        self.game.save_state()  # Save state before dealing commander damage
         self.show_players()
         idx = int(input ("Player to hit: ")) - 1
         commander = input("commander Name: ")
