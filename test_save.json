@@ -1,0 +1,26 @@
+{
+    "format_type": "Commander",
+    "starting_life": 40,
+    "track_commander_damage": true,
+    "current_turn_index": 0,
+    "players": [
+        {
+            "name": "Alice",
+            "life": 38,
+            "poison": 0,
+            "creatures": {
+                "Grizzly Bears": 2
+            },
+            "commander_damage": {}
+        },
+        {
+            "name": "Bob",
+            "life": 40,
+            "poison": 0,
+            "creatures": {},
+            "commander_damage": {
+                "Atraxa": 10
+            }
+        }
+    ]
+}
