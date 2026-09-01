@@ -1,0 +1,237 @@
+/* Reset & Base */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #1a1a2e;
+    color: #eee;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+main {
+    max-width: 700px;
+    width: 100%;
+}
+
+/* Header */
+header h1 {
+    text-align: center;
+    color: #f5c842;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+/* Mana Bar */
+.mana-bar {
+    text-align: center;
+    font-size: 50px;
+    padding: 10px 0;
+}
+
+/* Mana Icon Colors */
+/* Mana Icon Colors */
+.ms-w { 
+    color: #9f9f48;
+    background: #d4c9a8;
+    border-radius: 50%;
+    padding: 2px 4px;
+    display: inline-block;
+    line-height: 1;
+}
+.ms-u { 
+    color: #0a8bff;
+    background: #a8d4ff;
+    border-radius: 50%;
+    padding: 2px 4px;
+    display: inline-block;
+    line-height: 1;
+}
+.ms-b { 
+    color: #1a1a1a;
+    background: #cccccc;
+    border-radius: 50%;
+    padding: 2px 4px;
+    display: inline-block;
+    line-height: 1;
+}
+.ms-r { 
+    color: #ff3333;
+    background: #ffa8a8;
+    border-radius: 50%;
+    padding: 2px 4px;
+    display: inline-block;
+    line-height: 1;
+}
+.ms-g { 
+    color: #00aa00;
+    background: #a8ffa8;
+    border-radius: 50%;
+    padding: 2px 4px;
+    display: inline-block;
+    line-height: 1;
+}
+
+h1, h2, h3 {
+    font-family: 'Beleren Bold', serif;
+    font-weight: bold;
+}
+
+/* Sections */
+section {
+    background: #16213e;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 16px;
+}
+
+h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #f5c842;
+}
+
+/* Setup */
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+fieldset label {
+    display: block;
+    margin: 4px 0;
+}
+
+label {
+    display: block;
+    margin: 6px 0;
+}
+
+input[type="number"] {
+    width: 60px;
+    padding: 6px;
+    border-radius: 6px;
+    border: none;
+}
+
+#player-names input {
+    display: block;
+    margin: 6px 0;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    width: 100%;
+    max-width: 250px;
+}
+
+/* Buttons */
+button {
+    cursor: pointer;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+#start-btn {
+    background: #f5c842;
+    color: #1a1a2e;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 12px 30px;
+    margin-top: 12px;
+    width: 100%;
+}
+
+#start-btn:hover {
+    background: #ffd966;
+}
+
+/* Controls (dice, turn) */
+nav {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+nav button {
+    background: #1a1a2e;
+    color: #eee;
+    border: 1px solid #f5c842;
+    flex: 1;
+    min-width: 80px;
+}
+
+nav button:hover {
+    background: #f5c842;
+    color: #1a1a2e;
+}
+
+/* Player Cards */
+.player-card {
+    background: #0f3460;
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.player-card h3 {
+    margin: 0 0 8px 0;
+    color: #f5c842;
+}
+
+.life-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.life-row span {
+    font-size: 28px;
+    font-weight: bold;
+    min-width: 50px;
+    text-align: center;
+}
+
+.life-row button {
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+}
+
+.life-row button:first-of-type {
+    background: #e94560;
+    color: white;
+}
+
+.life-row button:last-of-type {
+    background: #1b9c85;
+    color: white;
+}
+
+.poison-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+.poison-row button {
+    background: #533483;
+    color: white;
+    padding: 4px 14px;
+    border-radius: 6px;
+}
+
+/* Active turn highlight */
+.player-card.current-turn {
+    border: 2px solid #f5c842;
+}
