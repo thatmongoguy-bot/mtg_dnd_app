@@ -120,3 +120,130 @@ document.getElementById('next-turn').addEventListener('click', () => {
     game.currentTurn = (game.currentTurn + 1) % game.players.length;
     renderGame();
 });
+// --- Card Search & Deck Builder ---
+let currentCard = null;
+let deck = {};
+
+// DOM refs
+const cardSearch = document.getElementById('card-search');
+const searchBtn = document.getElementById('search-btn');
+const cardResult = document.getElementById('card-result');
+const cardName = document.getElementById('card-name');
+const cardType = document.getElementById('card-type');
+const cardText = document.getElementById('card-text');
+const cardPrice = document.getElementById('card-price');
+const cardImage = document.getElementById('card-image');
+const addToDeckBtn = document.getElementById('add-to-deck');
+const cardCloseBtn = document.getElementById('card-close');
+const deckList = document.getElementById('deck-list');
+const exportBtn = document.getElementById('export-deck');
+const clearBtn = document.getElementById('clear-deck');
+
+// --- Search Card ---
+searchBtn.addEventListener('click', searchCard);
+cardSearch.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') searchCard();
+});
+
+async function searchCard() {
+    const query = cardSearch.value.trim();
+    if (!query) return;
+
+    try {
+        const response = await fetch(
+            `https://api.scryfall.com/cards/search?q=${encodeURIComponent(query)}`
+        );
+        if (!response.ok) {
+            alert('Card not found.');
+            return;
+        }
+        const data = await response.json();
+        const card = data.data[0];
+
+        currentCard = {
+            name: card.name,
+            type: card.type_line || 'Unknown type',
+            text: card.oracle_text || 'No text available.',
+            image: card.image_uris?.normal || '',
+            price: card.prices?.usd || 'N/A'
+        };
+
+        cardName.textContent = currentCard.name;
+        cardType.textContent = `Type: ${currentCard.type}`;
+        cardText.textContent = currentCard.text;
+        cardPrice.textContent = `Price: $${currentCard.price}`;
+        cardImage.src = currentCard.image;
+        cardImage.alt = currentCard.name;
+        cardResult.style.display = 'flex';
+
+    } catch (error) {
+        console.error('Error fetching card:', error);
+        alert('Error fetching card. Please try again.');
+    }
+}
+
+// --- Add to Deck ---
+addToDeckBtn.addEventListener('click', () => {
+    if (!currentCard) return;
+    if (deck[currentCard.name]) {
+        deck[currentCard.name].quantity += 1;
+    } else {
+        deck[currentCard.name] = { ...currentCard, quantity: 1 };
+    }
+    renderDeck();
+    cardResult.style.display = 'none';
+    cardSearch.value = '';
+});
+
+// --- Render Deck ---
+function renderDeck() {
+    deckList.innerHTML = '';
+    const names = Object.keys(deck);
+    if (names.length === 0) {
+        deckList.innerHTML = '<li style="color: #888;">Deck is empty.</li>';
+        return;
+    }
+    names.forEach(name => {
+        const entry = deck[name];
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <span>${entry.quantity}x ${name}</span>
+            <button class="remove-card" data-name="${name}">✕</button>
+        `;
+        deckList.appendChild(li);
+    });
+
+    document.querySelectorAll('.remove-card').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const name = this.dataset.name;
+            delete deck[name];
+            renderDeck();
+        });
+    });
+}
+
+// --- Close Card Result ---
+cardCloseBtn.addEventListener('click', () => {
+    cardResult.style.display = 'none';
+    cardSearch.value = '';
+});
+
+// --- Export Deck ---
+exportBtn.addEventListener('click', () => {
+    const json = JSON.stringify(deck, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'my_deck.json';
+    a.click();
+    URL.revokeObjectURL(url);
+});
+
+// --- Clear Deck ---
+clearBtn.addEventListener('click', () => {
+    if (confirm('Clear your entire deck?')) {
+        deck = {};
+        renderDeck();
+    }
+});

@@ -50,6 +50,34 @@
                 <button id="roll-d6">🎲 Roll d6</button>
                 <button id="next-turn">⏭ Next Turn</button>
             </nav>
+            <!-- Card Search & Deck Builder -->
+        <section id="card-section">
+            <h2><i class="ms ms-tap"></i> Card Search</h2>
+            
+            <div class="search-row">
+                <input type="text" id="card-search" placeholder="Search for a card..." />
+                <button id="search-btn">Search</button>
+            </div>
+
+            <div id="card-result" hidden>
+                <img id="card-image" src="" alt="Card image" />
+                <div id="card-details">
+                    <h3 id="card-name"></h3>
+                    <p id="card-type"></p>
+                    <p id="card-text"></p>
+                    <p id="card-price"></p>
+                    <button id="add-to-deck">Add to Deck</button>
+                    <button id="card-close">Close</button>
+                </div>
+            </div>
+
+            <h3>My Deck</h3>
+            <ul id="deck-list"></ul>
+            <div class="deck-actions">
+                <button id="export-deck">Export Deck (JSON)</button>
+                <button id="clear-deck">Clear Deck</button>
+            </div>
+        </section>
         </section>
     </main>
 

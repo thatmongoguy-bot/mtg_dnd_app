@@ -235,3 +235,133 @@ nav button:hover {
 .player-card.current-turn {
     border: 2px solid #f5c842;
 }
+/* Card Search & Deck Builder */
+#card-section {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #2a3a5e;
+}
+
+.search-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+#card-search {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #2a3a5e;
+    background: #0f3460;
+    color: #eee;
+    font-size: 1rem;
+}
+
+#card-search::placeholder {
+    color: #888;
+}
+
+#search-btn {
+    background: #f5c842;
+    color: #1a1a2e;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#card-result {
+    background: #0f3460;
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+#card-result img {
+    max-width: 180px;
+    border-radius: 8px;
+}
+
+#card-details {
+    flex: 1;
+}
+
+#card-details h3 {
+    margin: 0 0 4px 0;
+    color: #f5c842;
+}
+
+#card-details p {
+    margin: 4px 0;
+    font-size: 0.95rem;
+}
+
+#card-details button {
+    margin-top: 8px;
+    margin-right: 8px;
+    padding: 6px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#add-to-deck {
+    background: #1b9c85;
+    color: white;
+}
+
+#card-close {
+    background: #555;
+    color: white;
+}
+
+#deck-list {
+    list-style: none;
+    padding: 0;
+    max-height: 150px;
+    overflow-y: auto;
+    background: #0f3460;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+#deck-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 8px;
+    border-bottom: 1px solid #1a2a4a;
+}
+
+#deck-list li:last-child {
+    border-bottom: none;
+}
+
+.deck-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.deck-actions button {
+    padding: 6px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#export-deck {
+    background: #f5c842;
+    color: #1a1a2e;
+    font-weight: bold;
+}
+
+#clear-deck {
+    background: #e94560;
+    color: white;
+}
