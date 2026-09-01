@@ -1,4 +1,4 @@
-from counter import Counter
+from .counter import Counter
 
 class Player:
     def __init__(self, name, starting_life=40):

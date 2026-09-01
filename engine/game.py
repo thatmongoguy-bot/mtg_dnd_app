@@ -1,5 +1,4 @@
-from player import Player
-import player
+from .player import Player
 
 class Game:
     def __init__(self, format_type = "Standard"):

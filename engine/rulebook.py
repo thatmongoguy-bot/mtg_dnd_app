@@ -37,9 +37,9 @@ class Rulebook:
             print(f" Line {line_num}: {display_line}")
 
 if __name__ == "__main__":
-    rules = Rulebook("mtg_rules2026.txt")
-    rules.show_results("haste")
-    rules.show_results("flying")
+    rules = Rulebook("data/mtg_rules2026.txt")
+    rules.show_results("lifelink")
+    rules.show_results("hexproof")
     rules.show_results("commander")
     rules.show_results("lifelink")
 

@@ -1,11 +1,11 @@
-from game import Game
-from dice import Dice
-from rulebook import Rulebook
+from .game import Game
+from .dice import Dice
+from .rulebook import Rulebook
 
 class MTGMenu:
     def __init__(self):
         self.game = None
-        self.rules = Rulebook("mtg_rules2026.txt")
+        self.rules = Rulebook("data/mtg_rules2026.txt")
 
     def start(self):
         print("\n=== Welcome to MTG Assistant ===")
