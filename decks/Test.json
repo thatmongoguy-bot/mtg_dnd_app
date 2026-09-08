@@ -1,0 +1,10 @@
+{
+  "Demonic Tutor": {
+    "name": "Demonic Tutor",
+    "type": "Sorcery",
+    "text": "Search your library for a card, put that card into your hand, then shuffle.",
+    "image": "https://cards.scryfall.io/normal/front/a/2/a24b4cb6-cebb-428b-8654-74347a6a8d63.jpg?1783915679",
+    "price": "66.30",
+    "quantity": 1
+  }
+}

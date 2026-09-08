@@ -247,3 +247,105 @@ clearBtn.addEventListener('click', () => {
         renderDeck();
     }
 });
+// --- Save/Load Deck Via Flask ---
+async function saveDeckToBackend(deckName) {
+    try {
+        const response = await fetch('/api/deck/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: deckName, deck: deck })
+        });
+        const data = await response.json();
+        alert(data.message || 'Deck saved successfully.');
+    } catch (error) {
+        console.error('Error saving deck:', error);
+        alert('Error saving deck. Please try again.');
+    }
+}
+
+async function loadDeckFromBackend(deckName) {
+    try {
+        const response = await fetch(`/api/deck/load/${deckName}`);
+        if (!response.ok) {
+            alert('Deck not found.');
+            return;
+        }
+        const data = await response.json();
+        deck = data.deck;
+        renderDeck();
+        alert(`Deck "${deckName}" loaded successfully.`);
+    } catch (error) {
+        console.error('Error loading deck:', error);
+        alert('Error loading deck. Please try again.');
+    }
+}
+// --- Deck Backend Buttons ---
+document.getElementById('save-deck').addEventListener('click', () => {
+    const deckName = prompt('Enter a name for your deck:');
+    if (deckName) {
+        saveDeckToBackend(deckName);
+    }
+});
+
+document.getElementById('load-deck').addEventListener('click', () => {
+    const deckName = prompt('Enter the name of the deck to load:');
+    if (deckName) {
+        loadDeckFromBackend(deckName);
+    }
+});
+async function listDecks() {
+    try {
+        const response = await fetch('/api/deck/list');
+        const data = await response.json();
+        if (data.decks.length === 0) {
+            alert('No decks found.');
+            return;
+        }
+        alert('Saved decks:\n' + data.decks.join('\n'));
+    } catch (error) {
+        console.error('Error listing decks:', error);
+        alert('Error listing decks. Please try again.');
+    }
+}
+
+document.getElementById('list-decks').addEventListener('click', listDecks);
+
+// --- Rulebook ---
+const rulesSearch = document.getElementById('rules-search');
+const rulesSearchBtn = document.getElementById('rules-search-btn');
+const rulesList = document.getElementById('rules-list');
+const rulesCount = document.getElementById('rules-count');
+
+rulesSearchBtn.addEventListener('click', searchRules);
+rulesSearch.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') searchRules();
+});
+
+async function searchRules() {
+    const keyword = rulesSearch.value.trim();
+    if (!keyword) return;
+
+    try {
+        const response = await fetch('/api/rules/search', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ keyword: keyword })
+        });
+        const data = await response.json();
+        rulesCount.textContent = `Found ${data.count} results for "${data.keyword}".`;
+        rulesList.innerHTML = '';
+        if (data.results.length === 0) {
+            rulesList.innerHTML = '<li>No results found.</li>'; 
+            return;
+        }
+
+        data.results.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = `Line ${item.line}: ${item.text}`;
+            rulesList.appendChild(li);  
+        });
+    } catch (error) {
+        console.error('Error searching rules:', error);
+        alert('Error searching rules. Please try again.');
+    }
+}

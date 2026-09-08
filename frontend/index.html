@@ -75,10 +75,25 @@
             <ul id="deck-list"></ul>
             <div class="deck-actions">
                 <button id="export-deck">Export Deck (JSON)</button>
+                <button id="save-deck">Save Deck</button>
+                <button id="load-deck">Load Deck</button>
+                <button id="list-decks">List Decks</button>
                 <button id="clear-deck">Clear Deck</button>
             </div>
         </section>
         </section>
+ <!-- Rulebook Search -->
+        <section id="rulebook-section">
+            <h2><i class="ms ms-tap"></i> Rulebook Search</h2>
+            <div class="search-row">
+                <input type="text" id="rules-search" placeholder="Search the rulebook..." />
+                <button id="rules-search-btn">Search Rules</button>
+            </div>
+            <div id="rules-result">
+                <p id="rules-count"></p>
+                    <ul id="rules-list"></ul>
+            </div>
+        </section>       
     </main>
 
     <script src="script.js"></script>

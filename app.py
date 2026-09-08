@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
+from engine.rulebook import Rulebook
 import json
 import os
 
@@ -9,6 +10,21 @@ CORS(app)
 # Folder to store deck files
 DECK_FOLDER = "decks"
 os.makedirs(DECK_FOLDER, exist_ok=True)
+from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
+from engine.rulebook import Rulebook
+import json
+import os
+
+app = Flask(__name__)
+CORS(app)
+
+# Folder to store deck files
+DECK_FOLDER = "decks"
+os.makedirs(DECK_FOLDER, exist_ok=True)
+
+# Load the rulebook
+rules = Rulebook("data/mtg_rules2026.txt")
 
 # Serve frontend
 @app.route('/')
@@ -49,6 +65,17 @@ def list_decks():
     files = os.listdir(DECK_FOLDER)
     decks = [f.replace('.json', '') for f in files if f.endswith('.json')]
     return jsonify({'decks': decks})
+
+@app.route('/api/rules/search', methods=['POST'])
+def search_rules():
+    data = request.json
+    keyword = data.get('keyword', '')
+    results = rules.search(keyword)
+    return jsonify({
+        'keyword': keyword,
+        'count': len(results),
+        'results': [{'line': line, 'text': text} for line, text in results[:10]]})
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
