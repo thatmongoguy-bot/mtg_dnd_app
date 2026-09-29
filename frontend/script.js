@@ -79,7 +79,8 @@ function renderGame() {
             </div>
             <div class="poison-row">
                 <span>☠️ Poison: ${player.poison}</span>
-                <button data-action="poison" data-index="${index}">+ Poison</button>
+                <button data-action="poison" data-index="${index}" data-amount="1">+</button>
+                <button data-action="poison" data-index="${index}" data-amount="-1">−</button>
             </div>
         `;
         playersContainer.appendChild(card);
@@ -87,19 +88,28 @@ function renderGame() {
 
     // Attach event listeners
     document.querySelectorAll('[data-action="life"]').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click',  async function() {
             const idx = parseInt(this.dataset.index);
             const amount = parseInt(this.dataset.amount);
-            game.players[idx].life += amount;
-            renderGame();
+            await fetch('/api/life', {
+                method: 'Post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ player_index: idx, amount: amount })
+            });
+            await refreshGame();
         });
     });
 
     document.querySelectorAll('[data-action="poison"]').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', async function() {
             const idx = parseInt(this.dataset.index);
-            game.players[idx].poison += 1;
-            renderGame();
+            const amount = parseInt(this.dataset.amount) || 1;
+            await fetch('/api/poison', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ player_index: idx, amount: amount })
+            });
+            await refreshGame();
         });
     });
 }
@@ -347,5 +357,19 @@ async function searchRules() {
     } catch (error) {
         console.error('Error searching rules:', error);
         alert('Error searching rules. Please try again.');
+    }
+}
+async function refreshGame() {
+    try {
+        const response = await fetch(' /api/status');
+        if (!response.ok) {
+            console.error('No game in progress');
+            return;
+}
+        const data = await response.json();
+        game = data;
+        renderGame();
+    } catch (error) {
+    console.error('Error refreshing game:', error);
     }
 }
